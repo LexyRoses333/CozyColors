@@ -27,6 +27,8 @@ const horizonColor = new Color(1, 0.702, 0.471);
 
 registerStart(start);
 async function start() {
+    Player.position.set(new Vector3(0, 0.1, -10));
+
     updateSkydome();
     spawnLandscape();
 
@@ -125,7 +127,7 @@ function spawnArtStudio(pos: Vector3) {
     lexy.spawnDrawSettingButtons(pos.add(new Vector3(0, 1.5, -3.25)));
 }
 
-function spawnInteractiveSculpture(pos: Vector3) {
+function spawnInteractiveSculpture(pos: Vector3) {  //add trigger to allow player to change spin direction?
     const maxRadius = 6;
     const maxHeight = 15;
     const centerpieceScale = new Vector3(2.5, 15, 2.5);
@@ -196,7 +198,7 @@ function spawnLandscape() {
     const horizonLine = spawnPrimitive.cube(new Vector3(0, -10, -300), new Vector3(400, 6, 1), Quaternion.one, Color.randomHue(0.25, 0.1), 1, false, 'Static', undefined); //horizon line
 
     for (let i = 0; i < 30; i++) {
-        const x = -100 + (15 * i);
+        const x = -180 + (15 * i);
 
         const maxTilt = Math.PI / 8;
         const z = (Math.random() * 2 - 1) * maxTilt;
@@ -204,7 +206,9 @@ function spawnLandscape() {
 
         const color = Color.randomHue(0.25, 0.15);
 
-        spawnPrimitive.cone(Math.max(3, Math.random() * 6), new Vector3(x, 5, -5), Math.max(15, Math.random() * 55), randRot, color, 1, 'None', 'Static', horizonLine);
+        const scale = Math.max(15, Math.random() * 55);
+
+        spawnPrimitive.cone(Math.max(4, Math.random() * 8), new Vector3(x, (scale / 2), -5), scale, randRot, color, 1, 'None', 'Static', horizonLine);
     }
 
 
@@ -233,7 +237,7 @@ function createPaintableCube(pos: Vector3, scale: Vector3, rot: Quaternion, colo
 
     cube.mesh.texture.set(texture, false);
     cube.mesh.texture.setMipMaps(false);
-    cube.mesh.texture.isPaintable.set(true);  //doesnt have Concave ability for box collider?? Not yet paintable in world
+    cube.mesh.texture.isPaintable.set(true);
 
     texture.fillWithColor(color, alpha);
     texture.updateTexture();
@@ -292,3 +296,11 @@ function createPaintableCone(pos: Vector3, columns: number, diameter: number, ro
 //Skydome Change - triggered by something?
 
 //Teleport, inside waterfall? Clouds?
+
+
+
+
+
+//Notes for API Improvements
+// -Scaling on cones difficult (no vec3)
+// -Objects not paintable yet: cube, cone (might be colliderType not allowed to be "concave")
