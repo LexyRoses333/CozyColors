@@ -104,7 +104,7 @@ function spawnArtStudio(pos: Vector3) {
 
     poles.forEach((entity) => {
         entity.rayClick.initialize(false);
-        
+
         entity.rayClick.setClickFunction(() => {
             const newColor = Color.randomHue(0.55, 0.35);
 
@@ -192,6 +192,20 @@ function spawnMovingCube(pos: Vector3) {
 
 function spawnLandscape() {
     //Dist mountains with cones
+    const horizonLine = spawnPrimitive.cube(new Vector3(0, -10, -80), new Vector3(100, 15, 1), Quaternion.one, rockColor, 1, false, 'Static', undefined); //horizon line
+
+    for (let i = 0; i < 30; i++) {
+        const randRot = Quaternion.fromEuler(new Vector3(0, Math.PI / 2, Math.PI * 1.5));
+
+        if (Math.random() < 0.7) {
+            spawnPrimitive.cube(new Vector3((-30 + (2 * i)), (Math.random() * 15), -3), new Vector3((Math.random() * 8), (Math.random() * 10), 4), randRot, rockColor, 1, false, 'Static', horizonLine);
+        }
+        else {
+            spawnPrimitive.cone(3, new Vector3((-30 + (2 * i)), (Math.random() * 15), -3), Math.random() * 15, randRot, rockColor, 1, 'None', 'Static', horizonLine);
+        }
+    }
+
+
     //waterfall rocks
     //Perimeter rocks
     //Clouds, overTime
