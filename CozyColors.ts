@@ -195,26 +195,35 @@ function spawnMovingCube(pos: Vector3) {
 
 function spawnLandscape() {
     //Dist mountains with cones
-    const horizonLine = spawnPrimitive.cube(new Vector3(0, -10, -300), new Vector3(400, 6, 1), Quaternion.one, Color.randomHue(0.25, 0.1), 1, false, 'Static', undefined); //horizon line
-
-    for (let i = 0; i < 30; i++) {
-        const x = -180 + (15 * i);
-
-        const maxTilt = Math.PI / 8;
-        const z = (Math.random() * 2 - 1) * maxTilt;
-        const randRot = Quaternion.fromEuler(new Vector3(0, 0, z));
-
-        const color = Color.randomHue(0.25, 0.15);
-
-        const scale = Math.max(15, Math.random() * 55);
-
-        spawnPrimitive.cone(Math.max(4, Math.random() * 8), new Vector3(x, (scale / 2), -5), scale, randRot, color, 1, 'None', 'Static', horizonLine);
-    }
+    mountains(new Vector3(0, -20, -300), new Vector3(400, 10, 20), 'x', 15, 70, true);
+    mountains(new Vector3(-30, -1, 0), new Vector3(50, 10, 0), 'z', 8, 20, true);
 
 
     //waterfall rocks
     //Perimeter rocks
     //Clouds, overTime
+}
+
+function mountains(pos: Vector3, baseScale: Vector3, axisBuiltAlong: 'x' | 'z', minHeight: number, maxHeight: number, isBaseVisible: boolean) {
+    // const horizonLine = spawnPrimitive.cube(pos.add(new Vector3(0, 0, (baseScale.z / 2) * -1)), baseScale, Quaternion.fromEuler(new Vector3(Math.PI / 30, 0, 0)), Color.randomHue(0.25, 0.1), 1, false, 'Static', undefined);
+    const horizonLine = spawnPrimitive.plane('Front', pos.add(new Vector3(0, 0, (baseScale.z / 2) * -1)), baseScale, Quaternion.fromEuler(new Vector3(Math.PI / 30, 0, 0)), Color.randomHue(0.25, 0.1), isBaseVisible ? 1 : 0, 'None', 'Static', undefined);
+
+    for (let i = 0; i < 30; i++) {
+        // const x = -200 + (15 * i);
+        const axisCoordStart = Math.floor(axisBuiltAlong === 'x' ? (baseScale.x / 2) * -1 : (baseScale.z / 2) * -1);
+        const spaceMultiplier = Math.floor(baseScale.x / 25);
+        const axisPlacement = axisCoordStart + (spaceMultiplier * i);
+
+        const maxTilt = Math.PI / 8;
+        const randTilt = (Math.random() * 2 - 1) * maxTilt;
+        const randRot = axisBuiltAlong === 'x' ? Quaternion.fromEuler(new Vector3(0, 0, randTilt)) : Quaternion.fromEuler(new Vector3(randTilt, 0, 0));
+
+        const color = Color.randomHue(0.25, 0.15);
+        const scale = Math.max(minHeight, Math.random() * maxHeight);
+        const pos = axisBuiltAlong === 'x' ? new Vector3(axisPlacement, (scale / 2), -5) : new Vector3(-5, (scale / 2), axisPlacement);
+
+        spawnPrimitive.cone(Math.max(5, Math.random() * 10), pos, scale, randRot, color, 1, 'None', 'Static', horizonLine);
+    }
 }
 
 function createPaintablePlane(pos: Vector3, scale: Vector3, rot: Quaternion, color: Color, alpha: number, pixels: number, parent: Entity | undefined): Entity {
