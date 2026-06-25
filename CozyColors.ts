@@ -195,9 +195,9 @@ function spawnMovingCube(pos: Vector3) {
 
 function spawnLandscape() {
     //Dist mountains with cones
-    mountains(new Vector3(0, -20, -300), new Vector3(400, 30, 20), 'x', 15, 70, 0.1, true, false);
-    mountains(new Vector3(0, -10, -450), new Vector3(550, 40, 20), 'x', 25, 100, 0.8, true, false);
-    // mountains(new Vector3(-30, 2, 0), new Vector3(50, 10, 0), 'z', 8, 20, false, true);
+    mountains(new Vector3(0, -20, -300), new Vector3(400, 30, 20), 'x', 15, 70, true, false);
+    mountains(new Vector3(0, 0, -450), new Vector3(400, 50, 20), 'x', 15, 90, true, false);
+    mountains(new Vector3(-30, 2, 0), new Vector3(50, 10, 0), 'z', 8, 20, false, true);
 
 
     //waterfall rocks
@@ -205,9 +205,9 @@ function spawnLandscape() {
     //Clouds, overTime
 }
 
-function mountains(pos: Vector3, baseScale: Vector3, axisBuiltAlong: 'x' | 'z', minHeight: number, maxHeight: number, colorValue: number, isBaseVisible: boolean, isCollidable: boolean) {
+function mountains(pos: Vector3, baseScale: Vector3, axisBuiltAlong: 'x' | 'z', minHeight: number, maxHeight: number, isBaseVisible: boolean, isCollidable: boolean) {
     // const horizonLine = spawnPrimitive.cube(pos.add(new Vector3(0, 0, (baseScale.z / 2) * -1)), baseScale, Quaternion.fromEuler(new Vector3(Math.PI / 30, 0, 0)), Color.randomHue(0.25, 0.1), 1, false, 'Static', undefined);
-    const horizonLine = spawnPrimitive.plane('Front', pos.add(new Vector3(0, 0, (baseScale.z / 2) * -1)), baseScale, Quaternion.fromEuler(new Vector3(Math.PI / 30, 0, 0)), Color.randomHue(0.25, colorValue), isBaseVisible ? 1 : 0, isCollidable ? 'Convex' : 'None', 'Static', undefined);
+    const horizonLine = spawnPrimitive.plane('Front', pos.add(new Vector3(0, 0, (baseScale.z / 2) * -1)), baseScale, Quaternion.fromEuler(new Vector3(Math.PI / 30, 0, 0)), Color.randomHue(0.25, 0.1), isBaseVisible ? 1 : 0, isCollidable ? 'Convex' : 'None', 'Static', undefined);
 
     for (let i = 0; i < 30; i++) {
         const axisCoordStart = Math.floor(axisBuiltAlong === 'x' ? (baseScale.x / 2) * -1 : (baseScale.z / 2) * -1);
@@ -218,7 +218,7 @@ function mountains(pos: Vector3, baseScale: Vector3, axisBuiltAlong: 'x' | 'z', 
         const randTilt = (Math.random() * 2 - 1) * maxTilt;
         const randRot = axisBuiltAlong === 'x' ? Quaternion.fromEuler(new Vector3(0, 0, randTilt)) : Quaternion.fromEuler(new Vector3(randTilt, 0, 0));
 
-        const color = Color.randomHue(0.25, colorValue + 0.5);
+        const color = Color.randomHue(0.25, 0.15);
         const scale = Math.max(minHeight, Math.random() * maxHeight);
         const randDeviation = (Math.random() * 2 - 1) * 5;
         const pos = axisBuiltAlong === 'x' ? new Vector3(axisPlacement, (scale / 2), randDeviation) : new Vector3(randDeviation, (scale / 2), axisPlacement);
