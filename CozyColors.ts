@@ -28,6 +28,7 @@ const horizonColor = new Color(1, 0.702, 0.471);
 registerStart(start);
 async function start() {
     Player.position.set(new Vector3(0, 0.1, -10));
+    Player.rotation.set(Quaternion.one);
 
     updateSkydome();
     spawnLandscape();
@@ -49,7 +50,7 @@ async function start() {
     // spawnMovingCube(new Vector3(5, 1, -5));
 
     //Paintable rotating sphere
-    spawnSpinningGlobe(new Vector3(0, 0, -6));
+    spawnSpinningGlobe(new Vector3(-20, 0, -15));
 }
 
 function updateSkydome() {
@@ -229,6 +230,7 @@ function mountains(pos: Vector3, baseScale: Vector3, axisBuiltAlong: 'x' | 'z', 
         spawnPrimitive.cone(Math.max(5, Math.random() * 10), pos, scale, randRot, color, 1, 'None', 'Static', horizonLine);
     }
 }
+
 
 function createPaintablePlane(pos: Vector3, scale: Vector3, rot: Quaternion, color: Color, alpha: number, pixels: number, parent: Entity | undefined): Entity {
     const plane = spawnPrimitive.plane("Front", pos, scale, rot, color, alpha, "Concave", "Static", parent);
