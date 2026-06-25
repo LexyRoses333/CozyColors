@@ -195,8 +195,8 @@ function spawnMovingCube(pos: Vector3) {
 
 function spawnLandscape() {
     //Dist mountains with cones
-    mountains(new Vector3(0, -20, -300), new Vector3(400, 10, 20), 'x', 15, 70, true);
-    mountains(new Vector3(-30, -1, 0), new Vector3(50, 10, 0), 'z', 8, 20, true);
+    mountains(new Vector3(0, -20, -300), new Vector3(400, 20, 20), 'x', 15, 70, true, false);
+    mountains(new Vector3(-30, 2, 0), new Vector3(50, 10, 0), 'z', 8, 20, true, true);
 
 
     //waterfall rocks
@@ -204,12 +204,11 @@ function spawnLandscape() {
     //Clouds, overTime
 }
 
-function mountains(pos: Vector3, baseScale: Vector3, axisBuiltAlong: 'x' | 'z', minHeight: number, maxHeight: number, isBaseVisible: boolean) {
+function mountains(pos: Vector3, baseScale: Vector3, axisBuiltAlong: 'x' | 'z', minHeight: number, maxHeight: number, isBaseVisible: boolean, isCollidable: boolean) {
     // const horizonLine = spawnPrimitive.cube(pos.add(new Vector3(0, 0, (baseScale.z / 2) * -1)), baseScale, Quaternion.fromEuler(new Vector3(Math.PI / 30, 0, 0)), Color.randomHue(0.25, 0.1), 1, false, 'Static', undefined);
-    const horizonLine = spawnPrimitive.plane('Front', pos.add(new Vector3(0, 0, (baseScale.z / 2) * -1)), baseScale, Quaternion.fromEuler(new Vector3(Math.PI / 30, 0, 0)), Color.randomHue(0.25, 0.1), isBaseVisible ? 1 : 0, 'None', 'Static', undefined);
+    const horizonLine = spawnPrimitive.plane('Front', pos.add(new Vector3(0, 0, (baseScale.z / 2) * -1)), baseScale, Quaternion.fromEuler(new Vector3(Math.PI / 30, 0, 0)), Color.randomHue(0.25, 0.1), isBaseVisible ? 1 : 0, isCollidable ? 'Convex' : 'None', 'Static', undefined);
 
     for (let i = 0; i < 30; i++) {
-        // const x = -200 + (15 * i);
         const axisCoordStart = Math.floor(axisBuiltAlong === 'x' ? (baseScale.x / 2) * -1 : (baseScale.z / 2) * -1);
         const spaceMultiplier = Math.floor(baseScale.x / 25);
         const axisPlacement = axisCoordStart + (spaceMultiplier * i);
@@ -220,7 +219,8 @@ function mountains(pos: Vector3, baseScale: Vector3, axisBuiltAlong: 'x' | 'z', 
 
         const color = Color.randomHue(0.25, 0.15);
         const scale = Math.max(minHeight, Math.random() * maxHeight);
-        const pos = axisBuiltAlong === 'x' ? new Vector3(axisPlacement, (scale / 2), -5) : new Vector3(-5, (scale / 2), axisPlacement);
+        const randDeviation = (Math.random() * 2 - 1) * 5;
+        const pos = axisBuiltAlong === 'x' ? new Vector3(axisPlacement, (scale / 2), randDeviation) : new Vector3(randDeviation, (scale / 2), axisPlacement);
 
         spawnPrimitive.cone(Math.max(5, Math.random() * 10), pos, scale, randRot, color, 1, 'None', 'Static', horizonLine);
     }
