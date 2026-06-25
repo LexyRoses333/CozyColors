@@ -195,8 +195,9 @@ function spawnMovingCube(pos: Vector3) {
 
 function spawnLandscape() {
     //Dist mountains with cones
-    mountains(new Vector3(0, -20, -300), new Vector3(400, 20, 20), 'x', 15, 70, true, false);
-    mountains(new Vector3(-30, 5, -10), new Vector3(50, 10, 10), 'z', 8, 20, true, true);
+    mountains(new Vector3(0, -20, -300), new Vector3(400, 30, 20), 'x', 15, 70, true, false);
+    mountains(new Vector3(0, -10, -400), new Vector3(400, 30, 20), 'x', 15, 90, true, false);
+    mountains(new Vector3(-30, 2, 0), new Vector3(50, 10, 0), 'z', 8, 20, false, true);
 
 
     //waterfall rocks
@@ -208,7 +209,7 @@ function mountains(pos: Vector3, baseScale: Vector3, axisBuiltAlong: 'x' | 'z', 
     // const horizonLine = spawnPrimitive.cube(pos.add(new Vector3(0, 0, (baseScale.z / 2) * -1)), baseScale, Quaternion.fromEuler(new Vector3(Math.PI / 30, 0, 0)), Color.randomHue(0.25, 0.1), 1, false, 'Static', undefined);
     const horizonLine = spawnPrimitive.plane('Front', pos.add(new Vector3(0, 0, (baseScale.z / 2) * -1)), baseScale, Quaternion.fromEuler(new Vector3(Math.PI / 30, 0, 0)), Color.randomHue(0.25, 0.1), isBaseVisible ? 1 : 0, isCollidable ? 'Convex' : 'None', 'Static', undefined);
 
-    for (let i = 0; i < Math.floor(baseScale.z * 1.5); i++) {
+    for (let i = 0; i < 30; i++) {
         const axisCoordStart = Math.floor(axisBuiltAlong === 'x' ? (baseScale.x / 2) * -1 : (baseScale.z / 2) * -1);
         const spaceMultiplier = Math.floor(baseScale.x / 25);
         const axisPlacement = axisCoordStart + (spaceMultiplier * i);
