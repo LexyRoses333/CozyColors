@@ -193,20 +193,18 @@ function spawnMovingCube(pos: Vector3) {
 
 function spawnLandscape() {
     //Dist mountains with cones
-    const horizonLine = spawnPrimitive.cube(new Vector3(0, -10, -300), new Vector3(400, 6, 1), Quaternion.one, rockColor, 1, false, 'Static', undefined); //horizon line
+    const horizonLine = spawnPrimitive.cube(new Vector3(0, -10, -300), new Vector3(400, 6, 1), Quaternion.one, Color.randomHue(0.25, 0.1), 1, false, 'Static', undefined); //horizon line
 
     for (let i = 0; i < 30; i++) {
-        const color = Color.randomHue(0.25, 0.15);
         const x = -100 + (15 * i);
-    
-        if (Math.random() < 0.1) {
-            const randRot = Quaternion.fromEuler(new Vector3(0, 0, Math.random() * Math.PI / 10));
-            spawnPrimitive.cube(new Vector3(x, (Math.random() * 5), -5), new Vector3((Math.random() * 25), (Math.random() * 10), 1), randRot, Color.randomHue(0.35, 0.15), 1, false, 'Static', horizonLine);
-        }
-        else {
-            const randRot = Quaternion.fromEuler(new Vector3(0, 0, Math.random() * Math.PI / 6));
-            spawnPrimitive.cone(Math.max(3, Math.random() * 6), new Vector3(x, (Math.random() * 5), -5), Math.random() * 55, randRot, color, 1, 'None', 'Static', horizonLine);
-        }
+
+        const maxTilt = Math.PI / 8;
+        const z = (Math.random() * 2 - 1) * maxTilt;
+        const randRot = Quaternion.fromEuler(new Vector3(0, 0, z));
+
+        const color = Color.randomHue(0.25, 0.15);
+
+        spawnPrimitive.cone(Math.max(3, Math.random() * 6), new Vector3(x, 5, -5), Math.max(15, Math.random() * 55), randRot, color, 1, 'None', 'Static', horizonLine);
     }
 
 
