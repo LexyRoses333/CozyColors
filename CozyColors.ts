@@ -196,8 +196,11 @@ function spawnMovingCube(pos: Vector3) {
 function spawnLandscape() {
     //Dist mountains with cones
     mountains(new Vector3(0, -20, -300), new Vector3(400, 30, 20), 'x', 15, 70, true, false);
-    mountains(new Vector3(0, 0, -450), new Vector3(400, 50, 20), 'x', 15, 90, true, false);
-    mountains(new Vector3(-30, 2, 0), new Vector3(50, 10, 0), 'z', 8, 20, false, true);
+    mountains(new Vector3(0, -5, -500), new Vector3(700, 50, 20), 'x', 15, 90, true, false);
+    // mountains(new Vector3(-30, 2, 0), new Vector3(50, 10, 0), 'z', 8, 20, false, true);
+
+    const water = spawnPrimitive.plane('Front', new Vector3(0, -8, -20), new Vector3(500, 500, 500), Quaternion.fromEuler(new Vector3(-Math.PI / 2, 0, 0)), waterColor, 0.95, 'None', 'Static', undefined);
+
 
 
     //waterfall rocks
