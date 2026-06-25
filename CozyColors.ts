@@ -193,16 +193,16 @@ function spawnMovingCube(pos: Vector3) {
 
 function spawnLandscape() {
     //Dist mountains with cones
-    const horizonLine = spawnPrimitive.cube(new Vector3(0, -10, -80), new Vector3(100, 15, 1), Quaternion.one, rockColor, 1, false, 'Static', undefined); //horizon line
+    const horizonLine = spawnPrimitive.cube(new Vector3(0, -10, -180), new Vector3(200, 15, 1), Quaternion.one, rockColor, 1, false, 'Static', undefined); //horizon line
 
     for (let i = 0; i < 30; i++) {
-        const randRot = Quaternion.fromEuler(new Vector3(0, Math.PI / 2, Math.PI * 1.5));
+        const randRot = Quaternion.fromEuler(new Vector3(0, 0, Math.PI / 4));
 
         if (Math.random() < 0.7) {
-            spawnPrimitive.cube(new Vector3((-30 + (2 * i)), (Math.random() * 15), -3), new Vector3((Math.random() * 8), (Math.random() * 10), 4), randRot, rockColor, 1, false, 'Static', horizonLine);
+            spawnPrimitive.cube(new Vector3((-30 + (2 * i)), (Math.random() * 10), 0), new Vector3((Math.random() * 15), (Math.random() * 10), 1), randRot, rockColor, 1, false, 'Static', horizonLine);
         }
         else {
-            spawnPrimitive.cone(3, new Vector3((-30 + (2 * i)), (Math.random() * 15), -3), Math.random() * 15, randRot, rockColor, 1, 'None', 'Static', horizonLine);
+            spawnPrimitive.cone(3, new Vector3((-30 + (2 * i)), (Math.random() * 5), -5), Math.random() * 55, randRot, rockColor, 1, 'None', 'Static', horizonLine);
         }
     }
 
