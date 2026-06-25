@@ -28,9 +28,10 @@ const horizonColor = new Color(1, 0.702, 0.471);
 registerStart(start);
 async function start() {
     updateSkydome();
+    spawnLandscape();
 
     //Paintable ground 
-    createPaintablePlane(new Vector3(0, 0.02, 0), new Vector3(60, 60, 60), Quaternion.fromEuler(new Vector3(-Math.PI / 2, 0, 0)), groundColor, 1, 2048, undefined); //check scale placement for collider
+    createPaintablePlane(new Vector3(0, 0.02, 0), new Vector3(60, 60, 60), Quaternion.fromEuler(new Vector3(-Math.PI / 2, 0, 0)), groundColor, 1, 2048, undefined);
 
     Paint.properties.color.set(Color.randomHue(0.75, 0.8));
     Paint.properties.radius.set(30);
@@ -164,13 +165,13 @@ function spawnInteractiveSculpture(pos: Vector3) {
 
             overTime.moveTo.start(cube, newPos, 5_000);
             Async.wait(20);
-            overTime.rotateTo.start(cube, Quaternion.one, 5_000);
+            overTime.rotateTo.start(cube, Quaternion.fromEuler(Math.random() > 0.5 ? new Vector3(0, 0, Math.PI / 2) : new Vector3(Math.PI / 2, 0, 0)), 5_000);
 
             asyncID = Async.setTimeout(() => {
                 overTime.moveTo.start(cube, startPos, 5_000);
                 Async.wait(20);
                 overTime.rotateTo.start(cube, randRot, 5_000);
-            }, 8_000);
+            }, 10_000);
         });
     }
 }
