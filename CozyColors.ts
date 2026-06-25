@@ -197,14 +197,15 @@ function spawnLandscape() {
 
     for (let i = 0; i < 30; i++) {
         const color = Color.randomHue(0.25, 0.15);
-
+        const x = -100 + (15 * i);
+    
         if (Math.random() < 0.1) {
-            const randRot = Quaternion.fromEuler(new Vector3(0, 0, Math.random() * Math.PI / 4));
-            spawnPrimitive.cube(new Vector3((-100 + (15 * i)), (Math.random() * 10), -5), new Vector3((Math.random() * 15), (Math.random() * 20), Math.random() * 15), randRot, Color.randomHue(0.35, 0.15), 1, false, 'Static', horizonLine);
+            const randRot = Quaternion.fromEuler(new Vector3(0, 0, Math.random() * Math.PI / 10));
+            spawnPrimitive.cube(new Vector3(x, (Math.random() * 5), -5), new Vector3((Math.random() * 25), (Math.random() * 10), 1), randRot, Color.randomHue(0.35, 0.15), 1, false, 'Static', horizonLine);
         }
         else {
-            const randRot = Quaternion.fromEuler(new Vector3(0, 0, Math.random() * Math.PI / 8));
-            spawnPrimitive.cone(Math.max(3, Math.random() * 6), new Vector3((-30 + (2 * i)), (Math.random() * 5), -5), Math.random() * 55, randRot, color, 1, 'None', 'Static', horizonLine);
+            const randRot = Quaternion.fromEuler(new Vector3(0, 0, Math.random() * Math.PI / 6));
+            spawnPrimitive.cone(Math.max(3, Math.random() * 6), new Vector3(x, (Math.random() * 5), -5), Math.random() * 55, randRot, color, 1, 'None', 'Static', horizonLine);
         }
     }
 
