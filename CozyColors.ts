@@ -18,7 +18,7 @@ import { SkyDome } from "./Yuu API/SkyDome";
 //Color Scheme
 const groundColor = new Color(0.133, 0.42, 0.345);
 const patioColor = new Color(0.420, 0.792, 0.575);
-const waterColor = new Color(0.098, 0.698, 0.682);
+const waterColor = new Color(0.008, 0.529, 0.514);
 const rockColor = Color.randomHue(0.55, 0.35);
 const skyColor = new Color(0.702, 0.275, 0.969);
 const horizonColor = new Color(1, 0.702, 0.471);
@@ -196,10 +196,10 @@ function spawnMovingCube(pos: Vector3) {
 function spawnLandscape() {
     //Dist mountains with cones
     mountains(new Vector3(0, -20, -300), new Vector3(400, 30, 20), 'x', 15, 70, true, false);
-    mountains(new Vector3(0, -5, -500), new Vector3(700, 50, 20), 'x', 15, 90, true, false);
+    mountains(new Vector3(0, -15, -500), new Vector3(700, 50, 20), 'x', 15, 90, true, false);
     // mountains(new Vector3(-30, 2, 0), new Vector3(50, 10, 0), 'z', 8, 20, false, true);
 
-    const water = spawnPrimitive.plane('Front', new Vector3(0, -8, -20), new Vector3(500, 500, 500), Quaternion.fromEuler(new Vector3(-Math.PI / 2, 0, 0)), waterColor, 0.95, 'None', 'Static', undefined);
+    const water = spawnPrimitive.plane('Front', new Vector3(0, -5, -20), new Vector3(500, 500, 500), Quaternion.fromEuler(new Vector3(-Math.PI / 2, 0, 0)), waterColor, 0.95, 'None', 'Static', undefined);
 
 
 
