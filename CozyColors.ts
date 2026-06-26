@@ -12,6 +12,7 @@ import { Texture } from "./Yuu API/Texture";
 import { lexy } from "./PlaygroundLexy";
 import { overTime } from "./Yuu API/MotionOverTime";
 import { SkyDome } from "./Yuu API/SkyDome";
+import { entity_Data } from "./Yuu API/Entity_Data";
 
 
 
@@ -40,17 +41,15 @@ async function start() {
     Paint.properties.radius.set(30);
     Paint.properties.brushShape.set('Round');
 
-    //Painting Studio
     spawnArtStudio(new Vector3(20, 0.25, -20));
 
-    //Sculpture
     spawnInteractiveSculpture(new Vector3(15, 0, 15));
 
-    //CubeTest
+    spawnSpinningGlobe(new Vector3(-20, 0, -15));
+    
     // spawnMovingCube(new Vector3(5, 1, -5));
 
-    //Paintable rotating sphere
-    spawnSpinningGlobe(new Vector3(-20, 0, -15));
+    triggerTest(new Vector3(-25, 1, 25));
 }
 
 function updateSkydome() {
@@ -229,6 +228,21 @@ function mountains(pos: Vector3, baseScale: Vector3, axisBuiltAlong: 'x' | 'z', 
 
         spawnPrimitive.cone(Math.max(5, Math.random() * 10), pos, scale, randRot, color, 1, 'None', 'Static', horizonLine);
     }
+}
+
+function triggerTest(pos: Vector3) {
+    const startPos = pos.add(new Vector3(0, 5, 0));
+    const entity = spawnPrimitive.sphere(6, 6, startPos, 1, Quaternion.one, Color.randomHue(), 1, 'Sphere', 'Physics', undefined);
+
+
+    const trigger = new Entity(pos, Quaternion.one, Vector3.one, undefined, 'Static');
+
+    trigger.trigger.initialize(1, 1);
+    trigger.trigger.setVisible(true, Color.lavender);
+
+    trigger.trigger.setOccupiedFunction(() => {
+        entity.pos = startPos;
+    });
 }
 
 
