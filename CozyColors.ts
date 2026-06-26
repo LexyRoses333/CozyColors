@@ -46,10 +46,15 @@ async function start() {
     spawnInteractiveSculpture(new Vector3(15, 0, 15));
 
     spawnSpinningGlobe(new Vector3(-20, 0, -15));
-    
+
     // spawnMovingCube(new Vector3(5, 1, -5));
 
     triggerTest(new Vector3(-25, 1, 25));
+
+    physicsTest(new Vector3(-1, 1, 0), 'Physics', 'Static');
+    physicsTest(new Vector3(-4, 1, 0), 'Animated', 'Static');
+    physicsTest(new Vector3(-7, 1, 0), 'Physics', 'Animated');
+    physicsTest(new Vector3(-10, 1, 0), 'Animated', 'Animated');
 }
 
 function updateSkydome() {
@@ -245,6 +250,35 @@ function triggerTest(pos: Vector3) {
     trigger.trigger.setOccupiedFunction(() => {
         entity.velocity.set(Vector3.up.multiply((7 * Math.random()) + 2));
     });
+}
+
+function physicsTest(pos: Vector3, sphereBaseNodeType: "Physics" | "Animated", cubeBaseNodeType: "Static" | "Animated") {
+
+    const sphere = spawnPrimitive.sphere(12, 12, pos, 1.5, Quaternion.one, Color.red, 1, 'Sphere', sphereBaseNodeType === 'Physics' ? 'Physics' : 'Animated', undefined);
+
+    const startPosCube = pos.add(new Vector3(-3, 0, 0));
+    const cube = spawnPrimitive.cube(startPosCube, new Vector3(0.5, 2, 2), Quaternion.one, cubeBaseNodeType === "Static" ? Color.cyan : Color.lavender, 1, true, cubeBaseNodeType === "Static" ? 'Static' : 'Animated', undefined);
+
+    let count = 1
+
+    Async.setInterval(() => {
+        const dest = pos.add(new Vector3(1, 0, 0));
+
+        count++;
+        const dur = count * 1000;
+
+        overTime.moveTo.start(cube, dest, dur);
+
+        Async.setTimeout(() => {
+            sphere.pos = pos;
+            cube.pos = startPosCube;
+
+            if (count === 6) {
+                count = 1;
+            }
+        }, (count * 1000) + 3_000);
+
+    }, (count * 1000) + 3_000)
 }
 
 
