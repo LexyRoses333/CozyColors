@@ -243,7 +243,7 @@ function triggerTest(pos: Vector3) {
     trigger.trigger.setVisible(true, Color.lavender);
 
     trigger.trigger.setOccupiedFunction(() => {
-        entity.pos = startPos;
+        entity.velocity.set(Vector3.up.multiply(7 * Math.random()));
     });
 }
 
