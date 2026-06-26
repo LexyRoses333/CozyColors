@@ -234,10 +234,12 @@ function triggerTest(pos: Vector3) {
     const startPos = pos.add(new Vector3(0, 5, 0));
     const entity = spawnPrimitive.sphere(6, 6, startPos, 1, Quaternion.one, Color.randomHue(), 1, 'Sphere', 'Physics', undefined);
 
+    entity.tags.add('Test');
+    entity.trigger.isTracked.set(true);
 
     const trigger = new Entity(pos, Quaternion.one, Vector3.one, undefined, 'Static');
 
-    trigger.trigger.initialize(1, 1);
+    trigger.trigger.initialize(1, 1, ['Entity'], ['Test']);
     trigger.trigger.setVisible(true, Color.lavender);
 
     trigger.trigger.setOccupiedFunction(() => {
